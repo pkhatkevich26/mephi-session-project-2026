@@ -1,0 +1,14 @@
+#
+# /etc/fstab
+# Created by anaconda on Thu Oct  1 17:29:22 2026
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk/'.
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info.
+#
+# After editing this file, run 'systemctl daemon-reload' to update systemd
+# units generated from this file.
+#
+UUID=91cf17b4-2fea-4d78-85d3-d6cd92fc5f80 /                       ext4    defaults        1 1
+UUID=14af9c92-d564-4c6d-ac09-e27b54e910c1 /boot                   ext4    defaults        1 2
+UUID=3cf2bd03-95d0-415a-b37b-7f6108c60a5b none                    swap    defaults        0 0
+LABEL=MEPHI_WEB /mephi-web ext4 defaults 0 2

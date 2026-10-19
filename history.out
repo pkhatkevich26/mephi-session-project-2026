@@ -1,0 +1,168 @@
+    1  cat /etc/network
+    2  cat /etc/networks
+    3  nano /etc/netconfig
+    4  ip a
+    5  nano /etc/sysconfig/network
+    6  nano /etc/sysconfig/network-scripts/
+    7  ls /etc/sysconfig/network-scripts/
+    8  ls /etc/NetworkManager/system-connections/
+    9  nano /etc/NetworkManager/system-connections/enp0s8.nmconnection
+   10  сдуфк
+   11  clear
+   12  ip a
+   13  cat /etc/NetworkManager/system-connections/enp0s8.nmconnection
+   14  clear
+   15  hostnamectl set-hostname mephi-2026.domain.local
+   16  hostname
+   17  clear
+   18  ping 8.8.8.8
+   19  clear
+   20  dnf update & dnf upgrade -y
+   21  clear
+   22  dnf install nginx libcap-ng-utils
+   23  clear
+   24  dnf download tcpdump.x86_64 --downloaddir=/tmp
+   25  ls /tmp
+   26  rpm -ivh /tmp/tcpdump-4.99.5-1.red80.x86_64.rpm
+   27  dnf history > /tmp/dnf.out
+   28  cat /tmp/dnf.out
+   29  dnf -history
+   30  dnf history
+   31  clear
+   32  lsblk
+   33  fdisk /dev/sdb
+   34  partprobe
+   35  lsblk
+   36  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+   37  blkid /dev/sdb1
+   38  mkdir -p /mephi-web
+   39  echo "LABEL=MEPHI_WEB /mephi-web ext4 defaults 0 2" >> /etc/fstab
+   40  tail -1 /etc/fstab
+   41  cat /etc/fstab
+   42  cat /etc/fstab
+   43  mount -L MEPHI_WEB /mephi-web
+   44  df -h /mephi-web
+   45  clear
+   46  systemctl enable nginx
+   47  systemctl start nginx
+   48  systemctl status nginx
+   49  clear
+   50  journalctl -u nginx -b > /tmp/journalctl.out
+   51  cat /tmp/journalctl.out
+   52  clear
+   53  mkdir -p /data/mephi-2026
+   54  useradd -u 5501 user1
+   55  useradd -u 5502 user2
+   56  useradd -u 5503 user3
+   57  groupadd -g 4444 curators
+   58  useradd -G curators curator1
+   59  useradd -G curators curator2
+   60  chown root:curators /data/mephi-2026
+   61  chmod 750 /data/mephi-2026
+   62  setfacl -m u:user1:rwx /data/mephi-2026
+   63  setfacl -m u:user2:rwx /data/mephi-2026
+   64  setfacl -m u:user3:rwx /data/mephi-2026
+   65  setfacl -m g:curators:r-x /data/mephi-2026
+   66  setfacl -m o::--- /data/mephi-2026
+   67  setfacl -d -m u:user1:rwx /data/mephi-2026
+   68  setfacl -d -m u:user2:rwx /data/mephi-2026
+   69  setfacl -d -m u:user3:rwx /data/mephi-2026
+   70  setfacl -d -m g:curators:r-x /data/mephi-2026
+   71  setfacl -d -m o::--- /data/mephi-2026
+   72  getfacl /data/mephi-2026
+   73  clear
+   74  chmod u-s /usr/sbin/tcpdump
+   75  setcap cap_net_raw+ep /usr/sbin/tcpdump
+   76  getcap /usr/sbin/tcpdump
+   77  sudo -u user1 tcpdump --version
+   78  clear
+   79  sestatus
+   80  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+   81  dnf install policycoreutils-python-utils -y
+   82  clear
+   83  sestatus
+   84  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+   85  restorecon -Rv /mephi-web
+   86  ls -Z /mephi-web
+   87  ls /mephi-web/
+   88  echo "Hello from MEPHI" > /mephi-web/index.html
+   89  sudo -u nginx cat /mephi-web/index.html
+   90  nano /etc/nginx/conf.d/mephi-web.conf
+   91  nginx -t
+   92  systemctl reload nginx
+   93  curl http://localhost
+   94  ls -la /etc/nginx/conf.d/
+   95  cat /etc/nginx/nginx.conf
+   96  mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bak
+   97  mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bak
+   98  mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+   99  nginx -t
+  100  systemctl reload nginx
+  101  curl http://localhost
+  102  nginx -T
+  103  nginx -t
+  104  mv /etc/nginx/nginx.conf.bak /etc/nginx/nginx.conf
+  105  nano /etc/nginx/nginx.conf
+  106  sed -i 's|root /usr/share/nginx/html;|root /mephi-web;|g' /etc/nginx/nginx.conf
+  107  nginx -t
+  108  nginx -t
+  109  systemctl reload nginx
+  110  curl http://localhost
+  111  nano /etc/nginx/nginx.conf
+  112  nginx -t
+  113  systemctl reload nginx
+  114  curl http://localhost
+  115  clear
+  116  curl http://localhost
+  117  clear
+  118  nano /etc/security/access.conf
+  119  grep curator /etc/passwd
+  120  nano /etc/security/access.conf
+  121  grep curator /etc/passwd
+  122  nano /etc/security/access.conf
+  123  grep curator /etc/passwd
+  124  nano /etc/security/access.conf
+  125  tail -5 /etc/security/access.conf
+  126   grep curator /etc/passwd
+  127  su - curator1
+  128  grep access /etc/pam.d/login
+  129  grep access /etc/pam.d/sshd
+  130  echo "account required pam_access.so" >> /etc/pam.d/login
+  131  echo "account required pam_access.so" >> /etc/pam.d/sshd
+  132  grep access /etc/pam.d/sshd
+  133  grep access /etc/pam.d/login
+  134  su - curator1
+  135  echo "account required pam_access.so" >> /etc/pam.d/su
+  136  su - curator1
+  137  sed -i '5i account required pam_access.so' /etc/pam.d/login
+  138  sed -i '17d' /etc/pam.d/login
+  139  cat -n /etc/pam.d/login
+  140  sed -i '17d' /etc/pam.d/login
+  141  cat -n /etc/pam.d/login
+  142  passwd curator1
+  143  grep pam_access /var/log/secure | tail -10
+  144  ausearch -m user_login -ts recent
+  145  clear
+  146  nano /etc/security/access.conf
+  147  tail -5 /etc/security/access.conf
+  148  echo "account required pam_access.so" >> /etc/pam.d/login
+  149  echo "account required pam_access.so" >> /etc/pam.d/sshd
+  150  ausearch -m user_login -ts recent
+  151  clear
+  152  nano /etc/pam.d/system-auth
+  153  sed -i 's/pam_pwquality.so/pam_pwquality.so minlen=12 retry=3/' /etc/pam.d/system-auth
+  154  nano /etc/pam.d/system-auth
+  155  cat /etc/pam.d/system-auth
+  156  sed -i 's/PASS_MAX_DAYS.*$/PASS_MAX_DAYS   90/' /etc/login.defs
+  157  chage -l user1
+  158  cat /etc/login.defs
+  159  grep PASS_MAX_DAYS /etc/login.defs
+  160  clear
+  161  sed -i 's/PASS_MAX_DAYS.*$/PASS_MAX_DAYS   90/' /etc/login.defs
+  162  grep PASS_MAX_DAYS /etc/login.defs
+  163  chage -M 90 user1
+  164  chage -l user1
+  165  clear
+  166  echo "Hello from Student: M265979" > /mephi-web/index.html
+  167  curl http://localhost
+  168  history > ~/history.out
